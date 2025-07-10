@@ -679,9 +679,85 @@
         #backgroundMusic {
             display: none;
         }
+
+
+        /* ESTILOS PARA EL VIDEO MODAL */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(20px);
+}
+
+.video-modal.hidden {
+    display: none;
+}
+
+.video-container {
+    position: relative;
+    max-width: 80vw;
+    max-height: 80vh;
+    background: var(--glass-bg);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 40px;
+    height: 40px;
+    background: var(--neon-pink);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+}
+
+.close-btn:hover {
+    background: var(--neon-cyan);
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+}
     </style>
 </head>
 <body>
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="videoModal">
+    <div class="video-container">
+        <button class="close-btn" onclick="closeVideo()">&times;</button>
+        <video controls autoplay>
+            <source src="videoplayback.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    </div>
+</div>
+
+
+
     <!-- Audio oculto -->
     <audio id="backgroundMusic">
         <source src="El dicho de la selva 5 min (mp3cut.net).mp3" type="audio/mpeg">
@@ -745,7 +821,7 @@
     <section class="dj-section" id="dj">
         <div class="container dj-container">
             <h2 class="section-title neon-glow">HOST ESTELAR</h2>
-            <img src="IMG/ELIAS.jpeg" alt="ELIAS" class="dj-image">
+            <img src="IMG/elias autooo.png" alt="ELIAS" class="dj-image">
             <h3 class="dj-name neon-glow">ELIAS</h3>
             <p class="dj-description">APARENTE APARICCENTI</p>
             <a href="#" class="cta-button">🎵 DESCUBRIR MÁS</a>
@@ -891,6 +967,19 @@
                 }
             });
         });
+
+
+        // Función para cerrar el video
+function closeVideo() {
+    document.getElementById('videoModal').classList.add('hidden');
+}
+
+// Cerrar video con tecla Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeVideo();
+    }
+});
     </script>
 </body>
 </html>
