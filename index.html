@@ -951,50 +951,42 @@
 
     <!-- JavaScript para el control de audio -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const music = document.getElementById('backgroundMusic');
-            const musicBtn = document.getElementById('musicToggleBtn');
-            
-            musicBtn.addEventListener('click', function() {
-                if (music.paused) {
-                    music.play();
-                    musicBtn.textContent = 'Pausar Música';
-                    musicBtn.classList.add('playing');
-                } else {
-                    music.pause();
-                    musicBtn.textContent = 'Reproducir Música';
-                    musicBtn.classList.remove('playing');
-                }
-            });
-        });
-
-
-       document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const music = document.getElementById('backgroundMusic');
     const musicBtn = document.getElementById('musicToggleBtn');
     const videoModal = document.getElementById('videoModal');
     const closeBtn = document.querySelector('.close-btn');
     
     // Control de música
-    musicBtn.addEventListener('click', function() {
-        if (music.paused) {
-            music.play();
-            musicBtn.textContent = 'Pausar Música';
-            musicBtn.classList.add('playing');
-        } else {
-            music.pause();
-            musicBtn.textContent = 'Reproducir Música';
-            musicBtn.classList.remove('playing');
-        }
-    });
+    if (musicBtn && music) {
+        musicBtn.addEventListener('click', function() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicBtn.textContent = 'Pausar Música';
+                    musicBtn.classList.add('playing');
+                }).catch(error => {
+                    console.log('Error al reproducir música:', error);
+                    alert('No se pudo reproducir la música. Verifica que el archivo existe.');
+                });
+            } else {
+                music.pause();
+                musicBtn.textContent = 'Reproducir Música';
+                musicBtn.classList.remove('playing');
+            }
+        });
+    }
 
     // Función para cerrar el video
     function closeVideo() {
-        videoModal.classList.add('hidden');
+        if (videoModal) {
+            videoModal.classList.add('hidden');
+        }
     }
 
     // Cerrar video con botón X
-    closeBtn.addEventListener('click', closeVideo);
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeVideo);
+    }
 
     // Cerrar video con tecla Escape
     document.addEventListener('keydown', function(e) {
@@ -1004,12 +996,14 @@
     });
 
     // Cerrar video haciendo clic fuera del contenedor
-    videoModal.addEventListener('click', function(e) {
-        if (e.target === videoModal) {
-            closeVideo();
-        }
-    });
+    if (videoModal) {
+        videoModal.addEventListener('click', function(e) {
+            if (e.target === videoModal) {
+                closeVideo();
+            }
+        });
+    }
 });
-    </script>
+</script>
 </body>
 </html>
