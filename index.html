@@ -969,16 +969,46 @@
         });
 
 
-        // Función para cerrar el video
-function closeVideo() {
-    document.getElementById('videoModal').classList.add('hidden');
-}
+       document.addEventListener('DOMContentLoaded', function() {
+    const music = document.getElementById('backgroundMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    const videoModal = document.getElementById('videoModal');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // Control de música
+    musicBtn.addEventListener('click', function() {
+        if (music.paused) {
+            music.play();
+            musicBtn.textContent = 'Pausar Música';
+            musicBtn.classList.add('playing');
+        } else {
+            music.pause();
+            musicBtn.textContent = 'Reproducir Música';
+            musicBtn.classList.remove('playing');
+        }
+    });
 
-// Cerrar video con tecla Escape
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeVideo();
+    // Función para cerrar el video
+    function closeVideo() {
+        videoModal.classList.add('hidden');
     }
+
+    // Cerrar video con botón X
+    closeBtn.addEventListener('click', closeVideo);
+
+    // Cerrar video con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeVideo();
+        }
+    });
+
+    // Cerrar video haciendo clic fuera del contenedor
+    videoModal.addEventListener('click', function(e) {
+        if (e.target === videoModal) {
+            closeVideo();
+        }
+    });
 });
     </script>
 </body>
